@@ -158,5 +158,43 @@ class TestConversions(unittest.TestCase):
         ]
         self.assertListEqual(correct_result, text_to_textnodes(text))
 
+    def test_markdown_to_blocks(self):
+        md = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+"""
+        correct_result = [
+            "This is **bolded** paragraph",
+            "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+            "- This is a list\n- with items",
+        ]
+        self.assertListEqual(correct_result, markdown_to_blocks(md))
+
+    def test_markdown_to_blocks_extra_newlines(self):
+        md = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+
+
+
+
+- This is a list
+- with items
+"""
+        correct_result = [
+            "This is **bolded** paragraph",
+            "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+            "- This is a list\n- with items",
+        ]
+        self.assertListEqual(correct_result, markdown_to_blocks(md))
+
 if __name__ == "__main__":
     unittest.main()
